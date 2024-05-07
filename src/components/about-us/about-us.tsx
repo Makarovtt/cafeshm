@@ -1,0 +1,51 @@
+import { MenuDemo } from "./menu-demo";
+import { SliderActions } from "./slider-actions";
+
+export function AboutUs() {
+  return (
+    <section>
+      <div className=" max-w-maxWidth mx-auto my-20 flex justify-between items-center gap-10">
+        <div className="flex flex-col gap-6">
+          <div>
+            <h1 className="border-l-4 border-red-700 pl-4 uppercase text-2xl font-normal mb-5">
+              Кафе - Бар «Шашлычный мир» в Астрахани
+            </h1>
+            <p className="my-3">
+              Сеть-кафе «Шашлычный Мир» основана в 2012 году.
+            </p>
+            <p className="my-3">Мы расположены по адресам:</p>
+            <ul className=" list-disc ml-10 my-4">
+              <li>
+                <p className="my-3">ул. Татищева 43А, тел: 999-696</p>
+              </li>
+              <li>
+                <p className="my-3">
+                  Ул. Набережная Приволжского Затона, 16а, тел: 999-696
+                </p>
+              </li>
+            </ul>
+            <p className="my-3">
+              Кафе «Шашлычный Мир» с большой радостью открывает для Вас свои
+              двери.
+            </p>
+            <p className="my-3">
+              Уютная атмосфера, приветливый персонал, вкусные блюда европейской
+              и кавказской кухни. Что ещё нужно для хорошего отдыха?!
+            </p>
+            <p className="my-3">
+              4 Vip комнаты с системой караоке, танцпол, 2 общих зала. А так же
+              Вы можете заказать наши блюда на доставку или самовывоз к вашему
+              столу.
+            </p>
+          </div>
+          <div>
+            <MenuDemo />
+          </div>
+        </div>
+        <div>
+          <SliderActions />
+        </div>
+      </div>
+    </section>
+  );
+}
