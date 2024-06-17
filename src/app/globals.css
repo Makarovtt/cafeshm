@@ -15,14 +15,30 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-
+* {
+  scroll-behavior: smooth;
+}
 body {
   background-color: white;
   color: #1e1d1d;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+.swiper-button-prev:after,
+.swiper-rtl .swiper-button-next:after {
+  content: none !important;
+}
+.swiper-button-next:after,
+.swiper-rtl .swiper-button-prev:after {
+  content: none !important;
+}
+
+.basket-order {
+  height: calc(100% - 70px);
 }

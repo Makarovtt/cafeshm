@@ -31,3 +31,21 @@ export const DataGallery = [
   Img14,
   Img15,
 ];
+
+export const DataGallery2 = [
+  "/images/gallery/t-img1.jpg",
+  "/images/gallery/t-img2.jpg",
+  "/images/gallery/t-img3.jpg",
+  "/images/gallery/t-img4.jpg",
+  "/images/gallery/t-img5.jpg",
+  "/images/gallery/t-img6.jpg",
+  "/images/gallery/t-img7.jpg",
+  "/images/gallery/t-img8.jpg",
+  "/images/gallery/t-img9.jpg",
+  "/images/gallery/001.jpg",
+  "/images/gallery/002.jpg",
+  "/images/gallery/003.jpg",
+  "/images/gallery/004.jpg",
+  "/images/gallery/005.jpg",
+  "/images/gallery/006.jpg",
+];

@@ -1,0 +1,145 @@
+"use client";
+
+import { useState } from "react";
+import { OrderStep1 } from "./order-step-1";
+import { OrderStep2 } from "./order-step-2";
+import { OrderStep3 } from "./order-step-3";
+import { OrderSubmit } from "./order-submit";
+import { DataHumanErrors, IDataDelivery, IDataUser } from "./type";
+import { useDisclosure } from "@nextui-org/react";
+import { OrderBasket } from "./order-basket";
+import { useAppSelector, useAppDispatch } from "@/redux/hooks";
+import axios from "axios";
+import { ModalResultOrder } from "./modal-result-order";
+import { clearBasket } from "@/redux/features/basket-slice";
+
+const URLSendMail = "https://server.cafeshm.ru/mailto/app_test.php";
+
+export function OrderSection() {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [isCheckOrder, setIsCheckOrder] = useState<boolean>(true);
+  const [selected, setSelected] = useState<string | number>("self");
+  const [selected2, setSelected2] = useState<string | number>("cash");
+  const [dataUser, setDataUser] = useState<IDataUser>({
+    phone: "",
+  });
+  const [dataUserErrors, setDataUserErrors] = useState<DataHumanErrors>({
+    phone: "некорректно заполнено",
+  });
+  const [dataDeliverySelf, setDataDeliverySelf] = useState<string>("tatysheva");
+  const [dataDelivery, setDataDelivery] = useState<IDataDelivery>({
+    street: "",
+    home: "",
+    privateHome: false,
+    apartment: "",
+    comment: "",
+  });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorText, setErrorText] = useState<string>("");
+  const [checkResultOrder, setCheckResultOrder] = useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
+  const basketInfo = useAppSelector((state) => state.basketReducer);
+
+  // console.log(basketInfo);
+
+  function sendOrder() {
+    const formSend = new FormData();
+
+    formSend.append("phone", String(dataUser.phone));
+    formSend.append("deliveryType", String(selected));
+    switch (selected) {
+      case "self":
+        formSend.append("deliverySelfAddress", dataDeliverySelf);
+        break;
+
+      case "delivery":
+        formSend.append("street", String(dataDelivery?.street));
+        formSend.append("build", String(dataDelivery?.home));
+        formSend.append("privateHome", String(dataDelivery.privateHome));
+        formSend.append("apartment", String(dataDelivery.apartment));
+        formSend.append("comment", String(dataDelivery.comment));
+        break;
+
+      default:
+        console.log("Error SwitchCase");
+    }
+    formSend.append("payType", String(selected2));
+    formSend.append("order", JSON.stringify(basketInfo));
+
+    axios.post(URLSendMail, formSend).then((res) => {
+      console.log(res.data);
+      if (res.data === 1) {
+        setIsLoading(false);
+        setCheckResultOrder(true);
+        dispatch(clearBasket());
+        onOpen();
+      } else {
+        setErrorText(res.data);
+        setIsLoading(false);
+      }
+    });
+  }
+
+  return (
+    <section className="bg-[#F5F4F2] pb-16 pt-0.5">
+      <div
+        className="w-full max-w-maxWidth mx-auto items-baseline px-0.5 block
+                  
+                  xl:grid-cols-[minmax(200px,_1fr)_300px] xl:grid"
+      >
+        <div className="bg-white p-4 max-w-[1200px] mx-auto w-full">
+          <h1 className="border-l-4 border-red-700 pl-4 uppercase text-2xl font-normal mb-5">
+            Оформление заказа
+          </h1>
+
+          <div>
+            <div className="my-2 mb-5">
+              <OrderStep1
+                dataUserErrors={dataUserErrors}
+                setDataUserErrors={setDataUserErrors}
+                dataUser={dataUser}
+                setDataUser={setDataUser}
+                setIsCheckOrder={setIsCheckOrder}
+              />
+            </div>
+            <div className="mb-5">
+              <OrderStep2
+                dataDelivery={dataDelivery}
+                setDataDelivery={setDataDelivery}
+                selected={selected}
+                setSelected={setSelected}
+                setDataDeliverySelf={setDataDeliverySelf}
+              />
+            </div>
+            <div className="mb-5">
+              <OrderStep3 selected2={selected2} setSelected2={setSelected2} />
+            </div>
+          </div>
+
+          <div className="mb-5">
+            <OrderSubmit
+              isCheckOrder={isCheckOrder}
+              sendOrder={sendOrder}
+              isLoading={isLoading}
+              errorText={errorText}
+            />
+          </div>
+        </div>
+
+        <div
+          className="h-full hidden
+                        xl:block"
+        >
+          <OrderBasket className="mt-10" />
+        </div>
+
+        <ModalResultOrder
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+          checkResultOrder={checkResultOrder}
+        />
+      </div>
+    </section>
+  );
+}

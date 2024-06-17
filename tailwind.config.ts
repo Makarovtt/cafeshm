@@ -17,7 +17,22 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       maxWidth: {
-        maxWidth: "1900px",
+        maxWidth: "1920px",
+      },
+      screens: {
+        "3xl": "1750px",
+        "1/2xl": "1400px",
+        "1000px": "1000px",
+        tablet: "900px",
+        "500px": "500px",
+        "400px": "400px",
+      },
+      zIndex: {
+        "60": "60",
+        "70": "70",
+        "80": "80",
+        "90": "90",
+        "100": "100",
       },
     },
   },
