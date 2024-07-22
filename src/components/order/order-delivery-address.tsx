@@ -12,7 +12,7 @@ export function OrderDeliveryAddress({
   const [privateHome, setPrivateHome] = useState<boolean>(false);
   return (
     <div className="flex justify-between items-start gap-7 mb-5">
-      <div className="w-full p-5 max-w-[450px]">
+      <div className="w-full p-0 max-w-[450px] lg:p-5">
         <p>Укажите адрес доставки</p>
         <div className="mt-7 max-w-56">Астрахань</div>
         <div className="my-2">
@@ -55,10 +55,10 @@ export function OrderDeliveryAddress({
           </Checkbox>
         </div>
         {!dataDelivery.privateHome && (
-          <div className="my-2">
+          <div className="my-2 flex justify-between items-center gap-5">
             <Input
               type="text"
-              label="Номер квартиры"
+              label="№&nbsp;кв."
               isDisabled={dataDelivery.privateHome}
               classNames={{
                 inputWrapper: [
@@ -68,6 +68,34 @@ export function OrderDeliveryAddress({
               value={dataDelivery.apartment}
               onChange={(e) =>
                 setDataDelivery({ ...dataDelivery, apartment: e.target.value })
+              }
+            />
+            <Input
+              type="text"
+              label="Подъезд"
+              isDisabled={dataDelivery.privateHome}
+              classNames={{
+                inputWrapper: [
+                  "group-data-[focus=true]:border-cyan-500 border",
+                ],
+              }}
+              value={dataDelivery.podyezd}
+              onChange={(e) =>
+                setDataDelivery({ ...dataDelivery, podyezd: e.target.value })
+              }
+            />
+            <Input
+              type="text"
+              label="Этаж"
+              isDisabled={dataDelivery.privateHome}
+              classNames={{
+                inputWrapper: [
+                  "group-data-[focus=true]:border-cyan-500 border",
+                ],
+              }}
+              value={dataDelivery.floor}
+              onChange={(e) =>
+                setDataDelivery({ ...dataDelivery, floor: e.target.value })
               }
             />
           </div>

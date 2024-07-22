@@ -11,6 +11,8 @@ export interface IDataDelivery {
   home?: string;
   privateHome?: boolean;
   apartment?: string;
+  podyezd?: string;
+  floor?: string;
   comment?: string;
 }
 

@@ -32,10 +32,10 @@ export function OrderInputPhone({
   useEffect(() => {
     if (dataUser.phone.length === 15) {
       setDataUserErrors({ ...dataUserErrors, phone: "" });
-      setIsCheckOrder(false);
+      setIsCheckOrder(true);
     } else {
       setDataUserErrors({ ...dataUserErrors, phone: "некорректно заполнено" });
-      setIsCheckOrder(true);
+      setIsCheckOrder(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataUser]);
@@ -78,6 +78,9 @@ export function OrderInputPhone({
         }}
         onChange={(e) => funcChangePhone(e.target.value)}
       />
+      {dataUserErrors.phone != "" && (
+        <p className="text-red-700 ml-5 text-sm">* {dataUserErrors.phone}</p>
+      )}
     </>
   );
 }

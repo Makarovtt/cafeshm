@@ -4,6 +4,7 @@ import {
   clearBasket,
   addCountProductToBasket,
   removeCountProductToBasket,
+  removeToBasket,
 } from "@/redux/features/basket-slice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useState } from "react";
@@ -14,9 +15,21 @@ import { BasketModalClear } from "../basket/basket-modal-clear";
 import { cn } from "@/lib/utils";
 import { OrderBasketHeader } from "./order-basket-header";
 import { OrderBasketOrder } from "./order-basket-order";
+import { BasketModalDeleteItem } from "../basket/basket-modal-delete-item";
 
-export function OrderBasket({ className }: { className?: string }) {
+export function OrderBasket({
+  className,
+  showFooter,
+}: {
+  className?: string;
+  showFooter?: boolean;
+}) {
   const [isShowClearBasketModal, setIsShowClearBasketModal] = useState(false);
+  const [isShowDeleteItemBasketModal, setIsShowDeleteItemBasketModal] =
+    useState(false);
+  const [idDeleteItem, setIdDeleteItem] = useState<number>(0);
+  const [titleDeleteItem, setTitleDeleteItem] = useState<string>("");
+
   const dispatch = useAppDispatch();
   const basketInfo = useAppSelector((state) => state.basketReducer);
   function funcClearBasket() {
@@ -25,6 +38,9 @@ export function OrderBasket({ className }: { className?: string }) {
   }
   function funcDeleteItemFromBasket(id: number) {
     dispatch(removeCountProductToBasket(id));
+  }
+  function funcDeleteProductFromBasket(id: number) {
+    dispatch(removeToBasket(id));
   }
   function funcAddItemFromBasket(id: number) {
     dispatch(addCountProductToBasket(id));
@@ -39,14 +55,33 @@ export function OrderBasket({ className }: { className?: string }) {
       <OrderBasketHeader />
 
       {basketInfo.length ? (
-        <OrderBasketOrder
+        <BasketOrder
           basketInfo={basketInfo}
           funcDeleteItemFromBasket={funcDeleteItemFromBasket}
           funcAddItemFromBasket={funcAddItemFromBasket}
+          setIsShowDeleteItemBasketModal={setIsShowDeleteItemBasketModal}
+          setIdDeleteItem={setIdDeleteItem}
+          setTitleDeleteItem={setTitleDeleteItem}
+          showFooter={showFooter}
         />
       ) : (
         <BasketEmpty />
       )}
+
+      <ModalWindow
+        isShow={isShowDeleteItemBasketModal}
+        setIsShow={setIsShowDeleteItemBasketModal}
+        widthModal="500px"
+        heightModal="200px"
+      >
+        <BasketModalDeleteItem
+          className=""
+          setIsShowDeleteItemBasketModal={setIsShowDeleteItemBasketModal}
+          funcDeleteProductFromBasket={funcDeleteProductFromBasket}
+          idDeleteItem={idDeleteItem}
+          titleDeleteItem={titleDeleteItem}
+        />
+      </ModalWindow>
 
       <ModalWindow
         isShow={isShowClearBasketModal}

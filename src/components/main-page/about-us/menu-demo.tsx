@@ -1,13 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import ImgCesarChicken from "@/public/images/menu/cesar_chicken.webp";
-import ImgSalatTeplyi from "@/public/images/menu/salat-teplyi.webp";
 import ImgArrow from "@/public/images/about-us/arrow.svg";
 import ImgIconCoockie from "@/public/images/about-us/icon-coockie.svg";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useSwiper, Swiper, SwiperSlide } from "swiper/react";
+import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -17,7 +15,6 @@ import { Pagination, Navigation } from "swiper/modules";
 import { cn } from "@/lib/utils";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
-import { Domain } from "domain";
 import axios from "axios";
 
 const urlGetMenuMainPage = `https://server.cafeshm.ru/get/get_menu_main_page.php`;

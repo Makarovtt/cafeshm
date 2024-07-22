@@ -8,6 +8,14 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+@layer base {
+  :root {
+    --color-primary: 255 115 179;
+    --color-secondary: 147 17 17;
+    /* ... */
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -19,7 +27,7 @@
   scroll-behavior: smooth;
 }
 body {
-  background-color: white;
+  background-color: #f5f4f2;
   color: #1e1d1d;
   box-sizing: border-box;
   scroll-behavior: smooth;
@@ -39,6 +47,13 @@ body {
   content: none !important;
 }
 
-.basket-order {
+/* .basket-order {
   height: calc(100% - 70px);
+} */
+.basket-right-class {
+  height: calc(100vh - 200px);
+}
+.scrollbar {
+  scrollbar-color: #858585 rgba(0, 0, 0, 0);
+  scrollbar-width: thin;
 }

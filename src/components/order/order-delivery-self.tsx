@@ -25,6 +25,14 @@ export function OrderDeliverySelf({
         setGeoMap(country[1]?.karta);
         break;
 
+      case "brestskaya":
+        setGeoMap(country[2]?.karta);
+        break;
+
+      case "nikolaevskoe":
+        setGeoMap(country[3]?.karta);
+        break;
+
       default:
         setGeoMap(country[0]?.karta);
         break;
@@ -48,7 +56,9 @@ export function OrderDeliverySelf({
           onValueChange={(e) => changeGeoMap(e)}
         >
           <Radio value="tatysheva">{country[0]?.street}</Radio>
-          {/* <Radio value="riverstreet">{country[1]?.street}</Radio> */}
+          <Radio value="riverstreet">{country[1]?.street}</Radio>
+          <Radio value="brestskaya">{country[2]?.street}</Radio>
+          <Radio value="nikolaevskoe">{country[3]?.street}</Radio>
         </RadioGroup>
       </div>
       <div className="w-full sm:w-3/5">

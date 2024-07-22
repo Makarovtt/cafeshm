@@ -3,9 +3,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 let items = [];
 if (
   typeof window !== "undefined" &&
-  localStorage.getItem("basketReducer") !== null
+  localStorage.getItem("basketCafeshm") !== null
 ) {
-  items = JSON.parse(localStorage.getItem("basketReducer") || "");
+  items = JSON.parse(localStorage.getItem("basketCafeshm") || "");
 }
 
 type CountryState = [
@@ -30,9 +30,11 @@ export const basket = createSlice({
       const isExists = state.some((r) => r.id === idProduct.id);
       if (isExists) {
       } else {
+        const quant_default =
+          idProduct.portion + idProduct.unit === "100гр" ? 2 : 1;
         const tempObj = {
           id: idProduct.id,
-          quantity: 1,
+          quantity: quant_default,
           image: idProduct.picture,
           price: idProduct.price,
           title: idProduct.title,
@@ -40,29 +42,29 @@ export const basket = createSlice({
         };
         state.push(tempObj);
       }
-      localStorage.setItem("basketReducer", JSON.stringify(state));
+      localStorage.setItem("basketCafeshm", JSON.stringify(state));
     },
-    // removeToBasket: (state, action: PayloadAction<number>) => {
-    //   const idApparat = action.payload;
-    //   const isExists = state.some((r) => r.id === idApparat);
-    //   if (isExists) {
-    //     const index = state.findIndex((r) => r.id === idApparat);
-    //     if (index !== -1) {
-    //       state.splice(index, 1);
-    //     }
-    //   }
-    //   localStorage.setItem("basketReducer", JSON.stringify(state));
-    // },
+    removeToBasket: (state, action: PayloadAction<number>) => {
+      const idProduct = action.payload;
+      const isExists = state.some((r) => r.id === idProduct);
+      if (isExists) {
+        const index = state.findIndex((r) => r.id === idProduct);
+        if (index !== -1) {
+          state.splice(index, 1);
+        }
+      }
+      localStorage.setItem("basketCafeshm", JSON.stringify(state));
+    },
     clearBasket: (state) => {
       state.splice(0, state.length);
-      localStorage.setItem("basketReducer", JSON.stringify(state));
+      localStorage.setItem("basketCafeshm", JSON.stringify(state));
     },
     addCountProductToBasket: (state, action: PayloadAction<number>) => {
       const idApparat = action.payload;
       const index = state.findIndex((i) => i.id === idApparat);
       const quant = state[index].quantity;
       state[index].quantity = quant + 1;
-      localStorage.setItem("basketReducer", JSON.stringify(state));
+      localStorage.setItem("basketCafeshm", JSON.stringify(state));
     },
     removeCountProductToBasket: (state, action: PayloadAction<number>) => {
       const idApparat = action.payload;
@@ -74,14 +76,14 @@ export const basket = createSlice({
         state[index].quantity = quant - 1;
       }
 
-      localStorage.setItem("basketReducer", JSON.stringify(state));
+      localStorage.setItem("basketCafeshm", JSON.stringify(state));
     },
   },
 });
 
 export const {
   addToBasket,
-  //   removeToBasket,
+  removeToBasket,
   clearBasket,
   addCountProductToBasket,
   removeCountProductToBasket,

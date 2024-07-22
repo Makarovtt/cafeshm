@@ -21,14 +21,14 @@ function SocialButton({ className }: { className?: string }) {
                       group-hover:opacity-100 group-hover:visible group-hover:transform-[scaleX(1)_scaleY(1)_translateY(350px)]"
         >
           <a
-            href="tel:+89881728776"
+            href="https://t.me/+79272814789"
             className="text-[12px] bg-[rgba(0,0,0,0.8)] 
                                                 text-white no-underline p-[10px] rounded-[30px]"
           >
             Написать в Telegram
           </a>
           <a
-            href="tel:+89881728776"
+            href="https://t.me/+79272814789"
             className="w-[44px] h-[44px] rounded-[50%] flex items-center justify-center ml-[10px] bg-cyan-600"
           >
             <Image
@@ -46,7 +46,7 @@ function SocialButton({ className }: { className?: string }) {
                       group-hover:opacity-100 group-hover:visible group-hover:transform-[scaleX(1)_scaleY(1)_translateY(350px)]"
         >
           <a
-            href="https://wa.me/89881728776"
+            href="https://wa.me/79272814789?text=%F0%9F%91%8B%20"
             className="text-[12px] bg-[rgba(0,0,0,0.8)] 
                       text-white no-underline p-[10px] rounded-[30px]"
             target={"_blank"}
@@ -55,7 +55,7 @@ function SocialButton({ className }: { className?: string }) {
             Написать в Whatsapp
           </a>
           <a
-            href="https://wa.me/89881728776"
+            href="https://wa.me/79272814789?text=%F0%9F%91%8B%20"
             className="w-[44px] h-[44px] rounded-[50%] flex items-center justify-center ml-[10px] bg-green-600"
             target={"_blank"}
             rel="noreferrer"

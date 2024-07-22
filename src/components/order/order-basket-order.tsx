@@ -2,6 +2,7 @@ import { Button } from "@nextui-org/react";
 import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import { BasketOrder } from "./type";
+import { OrderBasketFooter } from "./order-basket-footer";
 
 export function OrderBasketOrder({
   basketInfo,
@@ -73,6 +74,7 @@ export function OrderBasketOrder({
               );
             })}
         </div>
+        <OrderBasketFooter sumOrder={sumOrder} />
       </div>
     </>
   );

@@ -28,7 +28,7 @@ export function ModalResultOrder({
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => {
-            setTimeout(onCloseModal, 5000);
+            if (errorText == "") setTimeout(onCloseModal, 5000);
             return (
               <>
                 {/* <ModalHeader className="flex flex-col gap-1">Заказ</ModalHeader> */}

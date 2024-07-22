@@ -12,17 +12,41 @@ import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import axios from "axios";
 import { ModalResultOrder } from "./modal-result-order";
 import { clearBasket } from "@/redux/features/basket-slice";
+import { OrderStepTime } from "./order-step-time";
+import { addToClient } from "@/redux/features/info-client-slice";
 
 const URLSendMail = "https://server.cafeshm.ru/mailto/app_test.php";
+let items = {};
+type DefaultState = {
+  phone: string;
+  deliveryType: string;
+  deliverySelfAddress: string;
+  street: string;
+  home: string;
+  privateHome: string;
+  apartment: string;
+  podyezd: string;
+  floor: string;
+  comment: string;
+  time: string;
+  order_day: string;
+  order_time: string;
+  payType: string;
+  order: string;
+};
+let initialState = items as DefaultState;
 
 export function OrderSection() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isCheckOrder, setIsCheckOrder] = useState<boolean>(true);
   const [selected, setSelected] = useState<string | number>("self");
   const [selected2, setSelected2] = useState<string | number>("cash");
+  const [selectedTime, setSelectedTime] = useState<string | number>("now");
   const [dataUser, setDataUser] = useState<IDataUser>({
     phone: "",
   });
+  const [selectDay, setSelectDay] = useState<string>("");
+  const [selectTime, setSelectTime] = useState<string>("");
   const [dataUserErrors, setDataUserErrors] = useState<DataHumanErrors>({
     phone: "некорректно заполнено",
   });
@@ -32,6 +56,8 @@ export function OrderSection() {
     home: "",
     privateHome: false,
     apartment: "",
+    podyezd: "",
+    floor: "",
     comment: "",
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -41,8 +67,74 @@ export function OrderSection() {
   const dispatch = useAppDispatch();
   const basketInfo = useAppSelector((state) => state.basketReducer);
 
-  // console.log(basketInfo);
+  function funcAddClientIfo() {
+    initialState = { ...initialState, phone: dataUser.phone };
+    initialState = { ...initialState, deliveryType: String(selected) };
 
+    switch (selected) {
+      case "self":
+        initialState = {
+          ...initialState,
+          deliverySelfAddress: dataDeliverySelf,
+        };
+        break;
+
+      case "delivery":
+        initialState = {
+          ...initialState,
+          street: String(dataDelivery?.street),
+        };
+        initialState = { ...initialState, home: String(dataDelivery?.home) };
+        initialState = {
+          ...initialState,
+          privateHome: String(dataDelivery?.privateHome),
+        };
+        initialState = {
+          ...initialState,
+          apartment: String(dataDelivery?.apartment),
+        };
+        initialState = {
+          ...initialState,
+          podyezd: String(dataDelivery?.podyezd),
+        };
+        initialState = { ...initialState, floor: String(dataDelivery?.floor) };
+        initialState = {
+          ...initialState,
+          comment: String(dataDelivery?.comment),
+        };
+        break;
+      default:
+        console.log("Error SwitchCase delivery");
+    }
+
+    switch (selectedTime) {
+      case "now":
+        initialState = { ...initialState, time: "now" };
+        break;
+
+      case "later":
+        initialState = { ...initialState, time: "later" };
+        initialState = { ...initialState, order_day: String(selectDay) };
+        initialState = { ...initialState, order_time: String(selectTime) };
+        break;
+
+      default:
+        console.log("Error SwitchCase selectedTime");
+    }
+    initialState = { ...initialState, payType: String(selected2) };
+    initialState = { ...initialState, order: JSON.stringify(basketInfo) };
+    dispatch(addToClient(initialState));
+    // console.log(initialState);
+  }
+
+  let sumOrder = 0;
+  {
+    basketInfo &&
+      basketInfo.map((item, index) => {
+        // setSumOrder((prev) => prev + Number(item.price * item.quantity));
+        sumOrder += item.price * item.quantity;
+      });
+  }
   function sendOrder() {
     const formSend = new FormData();
 
@@ -58,25 +150,43 @@ export function OrderSection() {
         formSend.append("build", String(dataDelivery?.home));
         formSend.append("privateHome", String(dataDelivery.privateHome));
         formSend.append("apartment", String(dataDelivery.apartment));
+        formSend.append("podyezd", String(dataDelivery.podyezd));
+        formSend.append("floor", String(dataDelivery.floor));
         formSend.append("comment", String(dataDelivery.comment));
         break;
 
       default:
-        console.log("Error SwitchCase");
+        console.log("Error SwitchCase delivery");
+    }
+
+    switch (selectedTime) {
+      case "now":
+        formSend.append("time", "now");
+        break;
+
+      case "later":
+        formSend.append("time", "later");
+        formSend.append("order_day", String(selectDay));
+        formSend.append("order_time", String(selectTime));
+        break;
+
+      default:
+        console.log("Error SwitchCase selectedTime");
     }
     formSend.append("payType", String(selected2));
     formSend.append("order", JSON.stringify(basketInfo));
-
     axios.post(URLSendMail, formSend).then((res) => {
       console.log(res.data);
       if (res.data === 1) {
         setIsLoading(false);
+        setErrorText("");
         setCheckResultOrder(true);
         dispatch(clearBasket());
         onOpen();
       } else {
         setErrorText(res.data);
         setIsLoading(false);
+        onOpen();
       }
     });
   }
@@ -113,7 +223,21 @@ export function OrderSection() {
               />
             </div>
             <div className="mb-5">
-              <OrderStep3 selected2={selected2} setSelected2={setSelected2} />
+              <OrderStepTime
+                selectedTime={selectedTime}
+                setSelectedTime={setSelectedTime}
+                selectDay={selectDay}
+                setSelectDay={setSelectDay}
+                setSelectTime={setSelectTime}
+                selectTime={selectTime}
+              />
+            </div>
+            <div className="mb-5">
+              <OrderStep3
+                selected2={selected2}
+                setSelected2={setSelected2}
+                sumOrder={sumOrder}
+              />
             </div>
           </div>
 
@@ -121,8 +245,13 @@ export function OrderSection() {
             <OrderSubmit
               isCheckOrder={isCheckOrder}
               sendOrder={sendOrder}
+              funcAddClientIfo={funcAddClientIfo}
               isLoading={isLoading}
               errorText={errorText}
+              sumOrder={sumOrder}
+              selected2={selected2}
+              checkResultOrder={checkResultOrder}
+              phoneErrors={dataUserErrors.phone}
             />
           </div>
         </div>
@@ -138,6 +267,7 @@ export function OrderSection() {
           isOpen={isOpen}
           onOpenChange={onOpenChange}
           checkResultOrder={checkResultOrder}
+          errorText={errorText}
         />
       </div>
     </section>

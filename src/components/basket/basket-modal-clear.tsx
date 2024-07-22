@@ -15,10 +15,10 @@ export function BasketModalClear({
       <h2 className="flex justify-center items-center h-full font-semibold text-xl">
         Очистить корзину?
       </h2>
-      <div className="flex justify-between items-center w-full mt-auto">
+      <div className="flex justify-end items-center w-full mt-auto gap-5">
         <Button onClick={() => setIsShowClearBasketModal(false)}>Отмена</Button>
         <Button color="danger" onClick={funcClearBasket}>
-          Удалить
+          Очистить
         </Button>
       </div>
     </div>

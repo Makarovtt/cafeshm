@@ -27,7 +27,7 @@ export function HeaderMain() {
         <div className="bg-[url(/images/header/bg-header-top.jpg)] h-[60px] mt-auto"></div>
 
         {/* Блок меню  */}
-        <div className="absolute h-screen top-0 bottom-0 left-0 right-0 z-10 min-h-[800px]">
+        <div className="absolute h-screen top-0 bottom-0 left-0 right-0 z-10 min-h-[800px] hidden md:block">
           <div className="max-w-maxWidth mx-auto h-[100%] 2xl:pl-40">
             <div
               className="w-full h-[100%] flex flex-col text-white 

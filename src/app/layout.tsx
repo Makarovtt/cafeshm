@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import { Providers } from "@/redux/provider";
 import "./globals.css";
 import SocialButton from "@/components/social-button/social-button";
-import SocialButtonMobile from "@/components/social-button/social-button-mobile";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      {/* <Head>
+        <script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
+      </Head> */}
       <body className={inter.className}>
         <Providers>
           {children}

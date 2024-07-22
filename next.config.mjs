@@ -5,6 +5,9 @@ const nextConfig = {
       {
         hostname: "server.cafeshm.ru",
       },
+      {
+        hostname: "server.kolkheti.ru",
+      },
     ],
   },
 };

@@ -13,6 +13,7 @@ import Image from "next/image";
 type Picture = {
   id: string;
   src: string;
+  src_big?: string;
   category: string;
 };
 type CatGallery = {
@@ -56,7 +57,7 @@ export function Gallery({ dataGallery }: { dataGallery: GetData }) {
                 {sectionGallery?.map((item) => {
                   return (
                     <a
-                      href={item.src}
+                      href={item.src_big ? item.src_big : item.src}
                       key={item.id}
                       className="h-[300px] w-full bg-black cursor-zoom-in relative"
                     >
