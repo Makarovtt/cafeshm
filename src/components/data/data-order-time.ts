@@ -48,28 +48,41 @@ function getDay(day: number) {
   const days = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
   return days[num - 1];
 }
-function getMonth(month: number) {
-  const months = [
-    "января",
-    "февраля",
-    "марта",
-    "июня",
-    "июля",
-    "августа",
-    "сентября",
-    "октября",
-    "ноября",
-    "декабря",
-  ];
-  return months[month - 2];
-}
+
+const months = [
+  "января",
+  "февраля",
+  "марта",
+  "апреля",
+  "мая",
+  "июня",
+  "июля",
+  "августа",
+  "сентября",
+  "октября",
+  "ноября",
+  "декабря",
+];
 
 export const ORDER_DAY = [
   `Сегодня`,
   `Завтра`,
-  `${getDay(date.getDay() + 2)}, ${Number(date.getDate() + 2)} ${getMonth(date.getMonth())}`,
-  `${getDay(date.getDay() + 3)}, ${Number(date.getDate() + 3)} ${getMonth(date.getMonth())}`,
-  `${getDay(date.getDay() + 4)}, ${Number(date.getDate() + 4)} ${getMonth(date.getMonth())}`,
-  `${getDay(date.getDay() + 5)}, ${Number(date.getDate() + 5)} ${getMonth(date.getMonth())}`,
-  `${getDay(date.getDay() + 6)}, ${Number(date.getDate() + 6)} ${getMonth(date.getMonth())}`,
+  `${getDay(date.getDay() + 2)}, ${getDayNumber(2)}`,
+  `${getDay(date.getDay() + 3)}, ${getDayNumber(3)}`,
+  `${getDay(date.getDay() + 4)}, ${getDayNumber(4)}`,
+  `${getDay(date.getDay() + 5)}, ${getDayNumber(5)}`,
+  `${getDay(date.getDay() + 6)}, ${getDayNumber(6)}`,
 ];
+
+function getDayNumber(i: number) {
+  const fullMonth = [0, 2, 4, 6, 7, 9, 11].includes(date.getMonth()) ? 31 : 30;
+  const toDay = Number(date.getDate());
+  const dayNumber = toDay + i;
+
+  if (dayNumber > fullMonth) {
+    const monthReturn = months[date.getMonth() + 1];
+    const dayReturn = dayNumber - fullMonth;
+    return `${dayReturn} ${monthReturn}`;
+  }
+  return `${dayNumber} ${months[date.getMonth()]}`;
+}

@@ -57,7 +57,7 @@ export function YUKassaBtn({
               color="primary"
               isLoading={isLoading}
               size="lg"
-              // isDisabled={!(isCheckOrder && sumOrder >= 1000)}
+              isDisabled={!(isCheckOrder && sumOrder >= 1000)}
               onClick={funcAddClientIfo}
               type="submit"
             >
