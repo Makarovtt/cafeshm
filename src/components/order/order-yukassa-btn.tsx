@@ -5,11 +5,13 @@ export function YUKassaBtn({
   isLoading,
   isCheckOrder,
   funcAddClientIfo,
+  checkResultTime,
 }: {
   sumOrder: number;
   isLoading: boolean;
   isCheckOrder: boolean;
   funcAddClientIfo: () => void;
+  checkResultTime: boolean;
 }) {
   const data = `<script src="https://yookassa.ru/integration/simplepay/js/yookassa_construct_form.js"></script>`;
   return (
@@ -57,7 +59,11 @@ export function YUKassaBtn({
               color="primary"
               isLoading={isLoading}
               size="lg"
-              isDisabled={!(isCheckOrder && sumOrder >= 1000)}
+              isDisabled={
+                isCheckOrder && sumOrder >= 1000 && checkResultTime
+                  ? false
+                  : true
+              }
               onClick={funcAddClientIfo}
               type="submit"
             >

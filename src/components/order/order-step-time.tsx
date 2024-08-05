@@ -63,34 +63,47 @@ export function OrderStepTime({
                 <CardBody>
                   <div className="py-5">
                     Укажите время когда Вы хотите получить заказ:
-                    <div className="mt-5 flex gap-5 items-center">
-                      <Select
-                        name="SelectDay"
-                        className="max-w-xs"
-                        placeholder=""
-                        label="день"
-                        selectedKeys={[selectDay]}
-                        disabledKeys={today ? [] : ["1"]}
-                        onChange={(e) => setSelectDay(e.target.value)}
-                      >
-                        {ORDER_DAY.map((item) => (
-                          <SelectItem key={item}>{item}</SelectItem>
-                        ))}
-                      </Select>
-
-                      <Select
-                        name="SelectTime"
-                        className="max-w-xs"
-                        placeholder=""
-                        label="время"
-                        selectedKeys={[selectTime]}
-                        disabledKeys={today ? [] : ["1"]}
-                        onChange={(e) => setSelectTime(e.target.value)}
-                      >
-                        {ORDER_TIME.map((item) => (
-                          <SelectItem key={item}>{item}</SelectItem>
-                        ))}
-                      </Select>
+                    <div className="mt-5 flex gap-5 items-start w-full max-w-[600px]">
+                      <div className="w-full">
+                        <Select
+                          name="SelectDay"
+                          className="max-w-xs"
+                          placeholder=""
+                          label="день"
+                          selectedKeys={[selectDay]}
+                          disabledKeys={today ? [] : ["1"]}
+                          onChange={(e) => setSelectDay(e.target.value)}
+                        >
+                          {ORDER_DAY.map((item) => (
+                            <SelectItem key={item}>{item}</SelectItem>
+                          ))}
+                        </Select>
+                        {!selectDay && (
+                          <span className="block mt-2 text-red-700 text-xs">
+                            * Укажите день
+                          </span>
+                        )}
+                      </div>
+                      <div className="w-full">
+                        <Select
+                          name="SelectTime"
+                          className="max-w-xs"
+                          placeholder=""
+                          label="время"
+                          selectedKeys={[selectTime]}
+                          disabledKeys={today ? [] : ["1"]}
+                          onChange={(e) => setSelectTime(e.target.value)}
+                        >
+                          {ORDER_TIME.map((item) => (
+                            <SelectItem key={item}>{item}</SelectItem>
+                          ))}
+                        </Select>
+                        {!selectTime && (
+                          <span className="block mt-2 text-red-700 text-xs">
+                            * Укажите время
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </CardBody>

@@ -1,0 +1,64 @@
+<?version 1.0?>
+
+<!-- (Delivery_orders – файл данных с заказами, Sender – код бызы отправителя, 
+Recipient – код базы получателя, ExternalSource – внешний источник) -->
+<Delivery_orders Sender="001" Recipient="010" ExternalSource="Site">
+    
+    <!-- (Order – данные заказа, NumDoc – номер заказа в базе отправителе, Ext_NumDoc – номер заказа в базе приемнике, Doc_date – дата заказа, Application – заявка, 
+    Client_code – код клиента, Client_name – наименование клиента, Client_guid – guid (идентификатор) элемента справочника клиент в 1С, Phone – номер телефона клиента, 
+    Phone_guid - guid (идентификатор) элемента справочника телефон в 1С, Address – адрес клиента, Address_guid - guid (идентификатор) элемента справочника адрес в 1С, 
+    Visitors – количество гостей, Comments – комментарий к заказу, Card – идентификатор карты клиента) -->
+    <Order NumDoc="0002" Ext_NumDoc="" Doc_date="08.10.2013 10:50:01" Application="Да" Client_code="50" Client_name="Ежик" Client_guid="1f5646d7-e3cb-11e2-bec0-50465da4f062" 
+            Phone="9111234588" Phone_guid="1f5646d8-e3cb-11e2-bec0-50465da4f062" Address="Норка, дом № 7" Address_guid="1f5646d9-e3cb-11e2-bec0-50465da4f062" 
+            Visitors="3" Comments=" ">
+        
+        <!-- (Order_more_info – дополнительная информация по заказу, Status – текущий статус заказа, Return – признак отказа в приеме заказа удаленной информационной базой, 
+        Author – код сотрудника производившего последние операции с заказом, Courier – код сотрудника назначенного доставить заказ клиенту , 
+        Operator – код сотрудника обработавшего заявку на доставку) -->
+        <Order_more_info Status="Открыт" Return="Нет" Author="000000008" Courier="000000015" Operator="000000008"/>
+        
+        
+        <!-- (Order_goods – перечень заказанных товаров) -->
+        <Order_goods>
+            <!-- (Goods – товар, Code – код товара, Name – наименование товара, Catalog – код каталога товаров (меню), Quantity – количество товара, 
+            Price – цена за единицу товара, Price_final – цена за единицу товара с учетом скидок, Sum – итоговая сумма, Sum_final – итоговая сумма к оплате с учетом всех скидок, 
+            Row_id – идентификатор строки, Price_type – код типа цены, Present – если этот товар является подарком то код скидки по которой был назначен он назначен) -->
+            <Goods Code="99" Name="Ланч №1" Catalog="1" Quantity="1" Price="200" Price_final="190" Sum="200" Sum_final="190" Row_id="" Price_type="000000002">
+                
+                
+                <!-- (Specifics – специфика подобранная к товару / специфики, Code – код специфики, Name – наименование специфики, Quantity – количество (всегда равно количеству «владельца»)) -->
+                <Specifics Code="11/1/1" Name="Борщ" Quantity="1"></Specifics>
+                <Specifics Code="4/1" Name="Со сметаной" Quantity="1"/>
+                <Specifics Code="11/2/2" Name="Пельмени" Quantity="1"/>
+                <Specifics Code="11/3/2" Name="Сок" Quantity="1"/>
+            </Goods>
+            <Goods Code="9" Name="Бульон куриный" Catalog="1" Quantity="1" Price="45" Price_final="43" Sum="45" Sum_final="43" Row_id="" Price_type="000000002"/>
+            <Goods Code="24" Name="Сосиски с гарниром" Catalog="1" Quantity="1" Price="100" Price_final="95" Sum="100" Sum_final="95" Row_id="" Price_type="000000002"/>
+            <Goods Code="22" Name="Ассорти мясное" Catalog="1" Quantity="1" Price="100" Price_final="95" Sum="100" Sum_final="95" Row_id="" Price_type="000000002"/>
+            <Goods Code="26" Name="Равиоли" Catalog="1" Quantity="1" Price="80" Price_final="76" Sum="80" Sum_final="76" Row_id="" Price_type="000000002"/>
+            <Goods Code="16" Name="Оливье" Catalog="1" Quantity="1" Price="50" Price_final="48" Sum="50" Sum_final="48" Row_id="" Price_type="000000002"/>
+            <Goods Code="18" Name="Бутерброд с красной икрой" Catalog="1" Quantity="2" Price="50" Price_final="47,5" Sum="100" Sum_final="95" Row_id="" Price_type="000000002"/>
+            <Goods Code="20" Name="Холодец" Catalog="1" Quantity="1" Price="30" Price_final="29" Sum="30" Sum_final="29" Row_id="" Price_type="000000002"/>
+            <Goods Code="77" Name="Чай "Монарх" черный" Catalog="1" Quantity="2" Price="10" Price_final="9,5" Sum="20" Sum_final="19" Row_id="" Price_type="000000002"/>
+            <Goods Code="74" Name=""Нико" томатный" Catalog="1" Quantity="1" Price="20" Price_final="19" Sum="20" Sum_final="19" Row_id="" Price_type="000000002"/>
+            <Goods Code="10" Name="Борщ украинский" Catalog="1" Quantity="2" Price="60" Price_final="57" Sum="120" Sum_final="114" Row_id="" Price_type="000000002"/>
+        </Order_goods>
+
+        <!-- (Order_discounts – перечень скидок отработавших в данном заказе) -->
+        <Order_discounts>
+            <!-- (Discounts – скидка, Type – тип скидки, Code – код скидки, Name – наименование скидки, Sum – сумма итоговой скидки в заказе, Partner – код партнера скидки) -->
+            <Discounts Type="НаЗаказ" Code="5/2" Name=" 10 - 15 порц" Sum="-42"/>
+            
+        </Order_discounts>
+
+        <!-- (Order_history – история изменения статусов заказа по данному заказу) -->
+        <Order_history>
+            <!-- (History – история, Date – дата изменений, Time – время изменений, State – присвоенный статус, User – код пользователя) -->
+            <History Date="2013-10-08" Time="10:50:01" State="Открыт" User="000000008"/>
+            
+            <History Date="2013-10-08" Time="10:50:33" State="Выгружен" User="000000008"/>
+        </Order_history>
+
+        
+    </Order>
+</Delivery_orders>

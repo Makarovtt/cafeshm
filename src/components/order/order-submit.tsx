@@ -12,6 +12,9 @@ export function OrderSubmit({
   selected2,
   checkResultOrder,
   phoneErrors,
+  selectDay,
+  selectTime,
+  selectedTime,
 }: {
   isCheckOrder: boolean;
   sendOrder: () => void;
@@ -22,7 +25,16 @@ export function OrderSubmit({
   selected2: string | number;
   checkResultOrder: boolean;
   phoneErrors: string;
+  selectDay: string;
+  selectTime: string;
+  selectedTime: string | number;
 }) {
+  let checkResultTime = false;
+  if (selectedTime === "now") {
+    checkResultTime = true;
+  } else if (selectedTime === "later" && selectDay && selectTime) {
+    checkResultTime = true;
+  }
   return (
     <>
       {errorText && (
@@ -38,6 +50,11 @@ export function OrderSubmit({
           Не указан телефон
         </div>
       )}
+      {!checkResultTime && (
+        <div className="text-red-700 text-md font-semibold pl-0 ml-0 md:pl-8 md:ml-3 mb-3">
+          Не указано время получения заказа
+        </div>
+      )}
       <div
         className="flex justify-start items-start border-l-gray-300 pl-0 ml-0 border-none
                        md:pl-8 md:ml-3 md:border-l"
@@ -48,7 +65,11 @@ export function OrderSubmit({
               color="primary"
               isLoading={isLoading}
               size="lg"
-              isDisabled={!(isCheckOrder && sumOrder >= 1000)}
+              isDisabled={
+                isCheckOrder && sumOrder >= 1000 && checkResultTime
+                  ? false
+                  : true
+              }
               onClick={sendOrder}
             >
               Заказать
@@ -60,6 +81,7 @@ export function OrderSubmit({
               isLoading={isLoading}
               isCheckOrder={isCheckOrder}
               funcAddClientIfo={sendOrder}
+              checkResultTime={checkResultTime}
             />
           )}
         </div>

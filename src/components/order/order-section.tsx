@@ -46,6 +46,7 @@ export function OrderSection() {
     phone: "",
   });
   const [selectDay, setSelectDay] = useState<string>("");
+  const [orderCheck, setOrderCheck] = useState<boolean>(false);
   const [selectTime, setSelectTime] = useState<string>("");
   const [dataUserErrors, setDataUserErrors] = useState<DataHumanErrors>({
     phone: "некорректно заполнено",
@@ -183,6 +184,7 @@ export function OrderSection() {
         setCheckResultOrder(true);
         dispatch(clearBasket());
         onOpen();
+        setOrderCheck(true);
       } else {
         setErrorText(res.data);
         setIsLoading(false);
@@ -252,6 +254,9 @@ export function OrderSection() {
               selected2={selected2}
               checkResultOrder={checkResultOrder}
               phoneErrors={dataUserErrors.phone}
+              selectDay={selectDay}
+              selectTime={selectTime}
+              selectedTime={selectedTime}
             />
           </div>
         </div>
