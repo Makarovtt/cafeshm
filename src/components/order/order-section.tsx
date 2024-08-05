@@ -179,12 +179,12 @@ export function OrderSection() {
     axios.post(URLSendMail, formSend).then((res) => {
       console.log(res.data);
       if (res.data === 1) {
-        setIsLoading(false);
-        setErrorText("");
-        setCheckResultOrder(true);
-        dispatch(clearBasket());
-        onOpen();
-        setOrderCheck(true);
+        // setIsLoading(false);
+        // setErrorText("");
+        // setCheckResultOrder(true);
+        // dispatch(clearBasket());
+        // onOpen();
+        // setOrderCheck(true);
       } else {
         setErrorText(res.data);
         setIsLoading(false);

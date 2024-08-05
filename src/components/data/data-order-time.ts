@@ -38,16 +38,6 @@ export const ORDER_TIME = [
 const date = new Date();
 const hour = date.getHours();
 const today = hour < 18;
-function getDay(day: number) {
-  let num = 0;
-  if (day > 7) {
-    num = day - 7;
-  } else {
-    num = day;
-  }
-  const days = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
-  return days[num - 1];
-}
 
 const months = [
   "января",
@@ -64,19 +54,108 @@ const months = [
   "декабря",
 ];
 
-export const ORDER_DAY = [
-  `Сегодня`,
-  `Завтра`,
-  `${getDay(date.getDay() + 2)}, ${getDayNumber(2)}`,
-  `${getDay(date.getDay() + 3)}, ${getDayNumber(3)}`,
-  `${getDay(date.getDay() + 4)}, ${getDayNumber(4)}`,
-  `${getDay(date.getDay() + 5)}, ${getDayNumber(5)}`,
-  `${getDay(date.getDay() + 6)}, ${getDayNumber(6)}`,
+const months_unicode = [
+  "01",
+  "02",
+  "03",
+  "04",
+  "05",
+  "06",
+  "07",
+  "08",
+  "09",
+  "10",
+  "11",
+  "12",
+];
+const days_unicode = [
+  "01",
+  "02",
+  "03",
+  "04",
+  "05",
+  "06",
+  "07",
+  "08",
+  "09",
+  "10",
+  "11",
+  "12",
+  "13",
+  "14",
+  "15",
+  "16",
+  "17",
+  "18",
 ];
 
+const fullMonth = [0, 2, 4, 6, 7, 9, 11].includes(date.getMonth()) ? 31 : 30;
+const toDay = Number(date.getDate());
+
+export const ORDER_DAY = [
+  {
+    title: "Сегодня",
+    date: `${date.getFullYear()}-${getDayValue(0)}`,
+  },
+  {
+    title: "Завтра",
+    date: `${date.getFullYear()}-${getDayValue(1)}`,
+  },
+  {
+    title: `${getDay(date.getDay() + 2)}, ${getDayNumber(2)}`,
+    date: `${date.getFullYear()}-${getDayValue(2)}`,
+  },
+  {
+    title: `${getDay(date.getDay() + 3)}, ${getDayNumber(3)}`,
+    date: `${date.getFullYear()}-${getDayValue(3)}`,
+  },
+  {
+    title: `${getDay(date.getDay() + 4)}, ${getDayNumber(4)}`,
+    date: `${date.getFullYear()}-${getDayValue(4)}`,
+  },
+  {
+    title: `${getDay(date.getDay() + 5)}, ${getDayNumber(5)}`,
+    date: `${date.getFullYear()}-${getDayValue(5)}`,
+  },
+  {
+    title: `${getDay(date.getDay() + 6)}, ${getDayNumber(6)}`,
+    date: `${date.getFullYear()}-${getDayValue(6)}`,
+  },
+  // `${getDay(date.getDay() + 2)}, ${getDayNumber(2)}`,
+  // `${getDay(date.getDay() + 3)}, ${getDayNumber(3)}`,
+  // `${getDay(date.getDay() + 4)}, ${getDayNumber(4)}`,
+  // `${getDay(date.getDay() + 5)}, ${getDayNumber(5)}`,
+  // `${getDay(date.getDay() + 6)}, ${getDayNumber(6)}`,
+];
+
+function getDay(day: number) {
+  let num = 0;
+  if (day > 7) {
+    num = day - 7;
+  } else {
+    num = day;
+  }
+  const days = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+  return days[num - 1];
+}
+
+function modifyDayNumber(i: number) {
+  if (i < 10) return `0${i}`;
+
+  return i;
+}
+
+function getDayValue(i: number) {
+  const dayNumber = toDay + i;
+  if (dayNumber > fullMonth) {
+    const monthReturn = months_unicode[date.getMonth() + 1];
+    const dayReturn = dayNumber - fullMonth;
+    return `${monthReturn}-${modifyDayNumber(dayReturn)}`;
+  }
+  return `${months_unicode[date.getMonth()]}-${modifyDayNumber(dayNumber)}`;
+}
+
 function getDayNumber(i: number) {
-  const fullMonth = [0, 2, 4, 6, 7, 9, 11].includes(date.getMonth()) ? 31 : 30;
-  const toDay = Number(date.getDate());
   const dayNumber = toDay + i;
 
   if (dayNumber > fullMonth) {

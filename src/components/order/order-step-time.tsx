@@ -75,7 +75,9 @@ export function OrderStepTime({
                           onChange={(e) => setSelectDay(e.target.value)}
                         >
                           {ORDER_DAY.map((item) => (
-                            <SelectItem key={item}>{item}</SelectItem>
+                            <SelectItem key={item.date}>
+                              {item.title}
+                            </SelectItem>
                           ))}
                         </Select>
                         {!selectDay && (
