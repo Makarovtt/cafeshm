@@ -5,7 +5,6 @@ import { YUKassaBtn } from "./order-yukassa-btn";
 export function OrderSubmit({
   isCheckOrder,
   sendOrder,
-  funcAddClientIfo,
   isLoading,
   errorText,
   sumOrder,
@@ -17,8 +16,7 @@ export function OrderSubmit({
   selectedTime,
 }: {
   isCheckOrder: boolean;
-  sendOrder: () => void;
-  funcAddClientIfo: () => void;
+  sendOrder: () => void | Promise<number>;
   isLoading: boolean;
   errorText: string;
   sumOrder: number;

@@ -68,66 +68,6 @@ export function OrderSection() {
   const dispatch = useAppDispatch();
   const basketInfo = useAppSelector((state) => state.basketReducer);
 
-  function funcAddClientIfo() {
-    initialState = { ...initialState, phone: dataUser.phone };
-    initialState = { ...initialState, deliveryType: String(selected) };
-
-    switch (selected) {
-      case "self":
-        initialState = {
-          ...initialState,
-          deliverySelfAddress: dataDeliverySelf,
-        };
-        break;
-
-      case "delivery":
-        initialState = {
-          ...initialState,
-          street: String(dataDelivery?.street),
-        };
-        initialState = { ...initialState, home: String(dataDelivery?.home) };
-        initialState = {
-          ...initialState,
-          privateHome: String(dataDelivery?.privateHome),
-        };
-        initialState = {
-          ...initialState,
-          apartment: String(dataDelivery?.apartment),
-        };
-        initialState = {
-          ...initialState,
-          podyezd: String(dataDelivery?.podyezd),
-        };
-        initialState = { ...initialState, floor: String(dataDelivery?.floor) };
-        initialState = {
-          ...initialState,
-          comment: String(dataDelivery?.comment),
-        };
-        break;
-      default:
-        console.log("Error SwitchCase delivery");
-    }
-
-    switch (selectedTime) {
-      case "now":
-        initialState = { ...initialState, time: "now" };
-        break;
-
-      case "later":
-        initialState = { ...initialState, time: "later" };
-        initialState = { ...initialState, order_day: String(selectDay) };
-        initialState = { ...initialState, order_time: String(selectTime) };
-        break;
-
-      default:
-        console.log("Error SwitchCase selectedTime");
-    }
-    initialState = { ...initialState, payType: String(selected2) };
-    initialState = { ...initialState, order: JSON.stringify(basketInfo) };
-    dispatch(addToClient(initialState));
-    // console.log(initialState);
-  }
-
   let sumOrder = 0;
   {
     basketInfo &&
@@ -136,7 +76,8 @@ export function OrderSection() {
         sumOrder += item.price * item.quantity;
       });
   }
-  function sendOrder() {
+  async function sendOrder(): Promise<number> {
+    setIsLoading(true);
     const formSend = new FormData();
 
     formSend.append("phone", String(dataUser.phone));
@@ -176,21 +117,27 @@ export function OrderSection() {
     }
     formSend.append("payType", String(selected2));
     formSend.append("order", JSON.stringify(basketInfo));
-    axios.post(URLSendMail, formSend).then((res) => {
-      console.log(res.data);
+    let axiosRequest = 0;
+    await axios.post(URLSendMail, formSend).then((res) => {
+      // console.log(res.data);
       if (res.data === 1) {
-        // setIsLoading(false);
-        // setErrorText("");
-        // setCheckResultOrder(true);
-        // dispatch(clearBasket());
-        // onOpen();
-        // setOrderCheck(true);
+        setErrorText("");
+        setCheckResultOrder(true);
+        if (selected2 === "cash") {
+          dispatch(clearBasket());
+          onOpen();
+          setIsLoading(false);
+        }
+        setOrderCheck(true);
+        console.log(" WTF");
+        axiosRequest = 1;
       } else {
         setErrorText(res.data);
         setIsLoading(false);
         onOpen();
       }
     });
+    return axiosRequest;
   }
 
   return (
@@ -247,7 +194,6 @@ export function OrderSection() {
             <OrderSubmit
               isCheckOrder={isCheckOrder}
               sendOrder={sendOrder}
-              funcAddClientIfo={funcAddClientIfo}
               isLoading={isLoading}
               errorText={errorText}
               sumOrder={sumOrder}
