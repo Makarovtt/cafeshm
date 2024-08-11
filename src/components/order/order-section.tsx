@@ -14,8 +14,9 @@ import { ModalResultOrder } from "./modal-result-order";
 import { clearBasket } from "@/redux/features/basket-slice";
 import { OrderStepTime } from "./order-step-time";
 import { addToClient } from "@/redux/features/info-client-slice";
+import { useRouter } from "next/navigation";
 
-const URLSendMail = "https://server.cafeshm.ru/mailto/app_test.php";
+const URLSendMail = "https://server.cafeshm.ru/mailto/test_pay.php";
 let items = {};
 type DefaultState = {
   phone: string;
@@ -37,6 +38,7 @@ type DefaultState = {
 let initialState = items as DefaultState;
 
 export function OrderSection() {
+  const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isCheckOrder, setIsCheckOrder] = useState<boolean>(true);
   const [selected, setSelected] = useState<string | number>("self");
@@ -72,11 +74,10 @@ export function OrderSection() {
   {
     basketInfo &&
       basketInfo.map((item, index) => {
-        // setSumOrder((prev) => prev + Number(item.price * item.quantity));
         sumOrder += item.price * item.quantity;
       });
   }
-  async function sendOrder(): Promise<number> {
+  async function sendOrder() {
     setIsLoading(true);
     const formSend = new FormData();
 
@@ -117,27 +118,25 @@ export function OrderSection() {
     }
     formSend.append("payType", String(selected2));
     formSend.append("order", JSON.stringify(basketInfo));
-    let axiosRequest = 0;
     await axios.post(URLSendMail, formSend).then((res) => {
-      // console.log(res.data);
-      if (res.data === 1) {
+      if (res.data.code === "1") {
         setErrorText("");
         setCheckResultOrder(true);
+        dispatch(clearBasket());
         if (selected2 === "cash") {
-          dispatch(clearBasket());
           onOpen();
           setIsLoading(false);
+        } else if (selected2 === "online") {
+          router.push(res.data.url);
         }
         setOrderCheck(true);
-        console.log(" WTF");
-        axiosRequest = 1;
       } else {
         setErrorText(res.data);
         setIsLoading(false);
         onOpen();
       }
+      setIsLoading(false);
     });
-    return axiosRequest;
   }
 
   return (

@@ -1,6 +1,4 @@
 import { Tabs, Tab, Card, CardBody, CardHeader } from "@nextui-org/react";
-import { Wrench } from "lucide-react";
-import { YUKassaBtn } from "./order-yukassa-btn";
 
 export function OrderStep3({
   selected2,
@@ -46,13 +44,6 @@ export function OrderStep3({
             <Tab key="online" title="Онлайн">
               <Card>
                 <CardBody>
-                  {/* <p className="my-5">В разработке</p>
-                    <Wrench
-                      strokeWidth={1}
-                      size={35}
-                      className="text-gray-400"
-                    /> */}
-
                   <div className=" p-5">
                     <p className="my-5">Оплата онлайн</p>
                     <p className="my-5"></p>

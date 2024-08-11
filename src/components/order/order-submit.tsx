@@ -16,7 +16,7 @@ export function OrderSubmit({
   selectedTime,
 }: {
   isCheckOrder: boolean;
-  sendOrder: () => void | Promise<number>;
+  sendOrder: () => void;
   isLoading: boolean;
   errorText: string;
   sumOrder: number;
