@@ -24,6 +24,7 @@ const config: Config = {
         "1/2xl": "1400px",
         "1000px": "1000px",
         tablet: "900px",
+        "700": "700px",
         "500px": "500px",
         "400px": "400px",
       },

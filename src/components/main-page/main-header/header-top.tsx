@@ -10,10 +10,10 @@ export function HeaderTop({ className }: { className?: string }) {
     <>
       <HeaderMainLogo className={cn(className)} />
       <div
-        className="max-w-maxWidth mx-auto h-auto flex justify-center gap-3 items-end relative z-[5] px-5
+        className="max-w-maxWidth h-auto flex justify-center gap-3 items-end relative z-[5] px-5
                     mb-4 flex-row-reverse
-                          md:ml-[500px] md:flex-col md:h-full
-                          lg:ml-[750px]
+                           md:flex-col md:h-full
+                          
                           xl:flex-row xl:gap-20 xl:items-center xl:justify-end"
       >
         <Button
@@ -26,7 +26,7 @@ export function HeaderTop({ className }: { className?: string }) {
         </Button>
         <Link
           href={"tel:999696"}
-          className="flex flex-row items-center gap-2 text-2xl font-bold
+          className="flex flex-row items-center gap-2 text-2xl font-bold whitespace-nowrap
                           lg:text-3xl"
         >
           <Image

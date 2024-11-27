@@ -19,20 +19,17 @@ export function HeaderMainLogo({ className }: { className?: string }) {
                     md:mx-4"
       >
         <Image src={ImgLogotype} alt="" className="w-[80px] lg:w-[100px]" />
-        <span
-          className="flex flex-col gap-1 justify-center items-center  text-gray-800
-                      lg:text-white"
-        >
+        <span className="flex flex-col gap-1 justify-center items-center  text-gray-800">
           <span
             className="font-semibold
-                          lg:font-light"
+                          "
           >
             сеть кафе с 2012 года
           </span>
           <span
             className="text-xl font-bold
                         md:text-3xl 
-                          lg:font-semibold"
+                          "
           >
             ШАШЛЫЧНЫЙ МИР
           </span>
